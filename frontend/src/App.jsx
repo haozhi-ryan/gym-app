@@ -1,7 +1,7 @@
-import react from "react"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
 import Home from "./pages/Home"
+import CalorieCalculator from "./pages/CalorieCalculator"
 import NotFound from "./pages/NotFound"
 import ProtectedRoute from "./components/ProtectedRoute"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
@@ -29,6 +29,16 @@ function App() {
             </ProtectedRoute>
           }
         />
+        
+        <Route
+          path="/calorie-calculator"
+          element={
+            <ProtectedRoute>
+              <CalorieCalculator />
+            </ProtectedRoute>
+          }
+        />
+        
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/register" element={<RegisterAndLogout />} />

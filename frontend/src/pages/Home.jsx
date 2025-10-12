@@ -47,7 +47,7 @@ function Home() {
     };
 
     return (
-        <div>
+        <div className="home-page">
             <div>
                 <h2>Notes</h2>
                 {notes.map((note) => (

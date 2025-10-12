@@ -1,0 +1,14 @@
+.secondary-title {
+  margin: 10px 0px;
+}
+
+.activity-level-title {
+  margin-bottom: 10px;
+}
+
+.activity-level {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 5px 0px;
+}
