@@ -40,9 +40,10 @@ api.interceptors.request.use(
 export default api;
 
 /** ---------- NEW ---------- */
+
 // For auth requests
 const authApi = axios.create({
-  baseURL: import.meta.env.VITE_AUTH_URL, // e.g. http://localhost:5000
+  baseURL: import.meta.env.VITE_AUTH_URL, 
 });
 
 // The interceptor adds your access token automatically before each request, so you don’t have to manually attach it.
@@ -66,4 +67,32 @@ authApi.interceptors.request.use(
 );
 
 export {authApi};
+
+// Creates an axios instance calorie calculator requests
+const calorieCalcApi = axios.create({
+  baseURL: import.meta.env.VITE_CALC_URL, 
+});
+
+// The interceptor adds your access token automatically before each request, so you don’t have to manually attach it.
+authApi.interceptors.request.use(
+  (config) => {
+    // Get the access token stored in the browser
+    const token = localStorage.getItem(ACCESS_TOKEN);
+
+    // If a token exists, attach it to the Authorization header
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    // Return the updated request config so the request can continue
+    return config;
+  },
+  (error) => {
+    // If something went wrong before sending the request, reject the promise
+    return Promise.reject(error);
+  }
+);
+
+export {calorieCalcApi}
+
 /** ------------------------- */

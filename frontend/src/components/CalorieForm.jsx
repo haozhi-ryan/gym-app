@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "../styles/CalorieForm.css"
+import { calorieCalcApi } from "../api";
 
 export default function CalorieForm() {
   const [weight, setWeight] = useState("");
@@ -10,46 +11,36 @@ export default function CalorieForm() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
 
-  const activityFactors = {
-    sedentary: 1.2,
-    light: 1.375,
-    moderate: 1.465,
-    active: 1.725,
-    very_active: 1.9,
-    extra_active: 2.0,
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault()
     setError("");
     setResult(null);
 
-    const W = parseFloat(weight);
-    const H = parseFloat(height);
-    const A = parseFloat(age);
+    try {
+      // Send POST request to the service
+      const res = await calorieCalcApi.post("/calculate", {
+        sex,
+        weightKg: Number(weight),
+        heightCm: Number(height),
+        age: Number(age),
+        activity
+      })
 
-    if (!W || !H || !A) {
-      setError("Please enter valid values for weight, height, and age.");
-      return;
+      // Get the data
+      const data = res.data;
+
+      setResult({
+        bmr: data.bmr,
+        maintenance: data.maintenance,
+        mildLoss: data.mildLoss,
+        loss: data.loss,
+        extremeLoss: data.extremeLoss,
+      });
+
+    } catch (error) {
+      console.log(e.response?.data);
     }
-
-    const base = 10 * W + 6.25 * H - 5 * A;
-    const bmr = sex === "male" ? base + 5 : base - 161;
-    const factor = activityFactors[activity];
-    const maintenance = bmr * factor;
-
-    const mildLoss = maintenance * 0.9;   // 0.25kg/week
-    const loss = maintenance * 0.8;       // 0.5kg/week
-    const extremeLoss = maintenance * 0.6; // 1kg/week
-
-    setResult({
-      bmr: Math.round(bmr),
-      maintenance: Math.round(maintenance),
-      mildLoss: Math.round(mildLoss),
-      loss: Math.round(loss),
-      extremeLoss: Math.round(extremeLoss),
-    });
-  };
+  }
 
   return (
     <div style={{ maxWidth: 520, margin: "24px auto", padding: 16, border: "1px solid #e5e7eb", borderRadius: 12 }}>
@@ -107,7 +98,7 @@ export default function CalorieForm() {
         {/* Activity */}
         <div>
           <h4 className="activity-level-title">Activity Level</h4>
-          <div class="activity-levels" style={{ display: "grid", gap: 6 }}>
+          <div className="activity-levels" style={{ display: "grid", gap: 6 }}>
             {[
               ["sedentary", "Sedentary (little or no exercise)"],
               ["light", "Light (exercise 1–3 times/week)"],
@@ -116,7 +107,7 @@ export default function CalorieForm() {
               ["very_active", "Very Active (intense exercise 6–7 times/week)"],
               ["extra_active", "Extra Active (very intense daily or physically demanding job)"],
             ].map(([val, label]) => (
-              <div class="activity-level">
+              <div className="activity-level" key={val}>
                 <span key={val}>
                   {label}
                 </span>
