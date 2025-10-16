@@ -2,6 +2,7 @@ import Login from "./pages/Login"
 import Register from "./pages/Register"
 import Home from "./pages/Home"
 import CalorieCalculator from "./pages/CalorieCalculator"
+import Workout from "./pages/Workout"
 import NotFound from "./pages/NotFound"
 import ProtectedRoute from "./components/ProtectedRoute"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
@@ -35,6 +36,15 @@ function App() {
           element={
             <ProtectedRoute>
               <CalorieCalculator />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/workout"
+          element={
+            <ProtectedRoute>
+              <Workout />
             </ProtectedRoute>
           }
         />

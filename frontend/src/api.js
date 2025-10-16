@@ -17,25 +17,6 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL : apiUrl,
 });
 
-// The interceptor adds your access token automatically before each request, so you don’t have to manually attach it.
-api.interceptors.request.use(
-  (config) => {
-    // Get the access token stored in the browser
-    const token = localStorage.getItem(ACCESS_TOKEN);
-
-    // If a token exists, attach it to the Authorization header
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-
-    // Return the updated request config so the request can continue
-    return config;
-  },
-  (error) => {
-    // If something went wrong before sending the request, reject the promise
-    return Promise.reject(error);
-  }
-);
 
 export default api;
 
@@ -73,26 +54,12 @@ const calorieCalcApi = axios.create({
   baseURL: import.meta.env.VITE_CALC_URL, 
 });
 
-// The interceptor adds your access token automatically before each request, so you don’t have to manually attach it.
-authApi.interceptors.request.use(
-  (config) => {
-    // Get the access token stored in the browser
-    const token = localStorage.getItem(ACCESS_TOKEN);
+export {calorieCalcApi};
 
-    // If a token exists, attach it to the Authorization header
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+const workoutApi = axios.create({
+  baseUrl: import.meta.env.VITE_WORKOUT_URL,
+});
 
-    // Return the updated request config so the request can continue
-    return config;
-  },
-  (error) => {
-    // If something went wrong before sending the request, reject the promise
-    return Promise.reject(error);
-  }
-);
-
-export {calorieCalcApi}
+export {workoutApi};
 
 /** ------------------------- */
