@@ -144,7 +144,7 @@ export default function CalorieForm() {
       {result && (
         <div style={{ marginTop: 16, padding: 12, background: "#f9fafb", borderRadius: 10 }}>
           <p><strong>BMR:</strong> {result.bmr} kcal/day</p>
-          <p><strong>Maintenance (TDEE):</strong> {result.maintenance} kcal/day</p>
+          <p><strong>Maintenance:</strong> {result.maintenance} kcal/day</p>
           <p><strong>Mild Weight Loss (−0.25 kg/week):</strong> {result.mildLoss} kcal/day</p>
           <p><strong>Weight Loss (−0.5 kg/week):</strong> {result.loss} kcal/day</p>
           <p><strong>Extreme Weight Loss (−1 kg/week):</strong> {result.extremeLoss} kcal/day</p>
