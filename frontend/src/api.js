@@ -60,6 +60,26 @@ const workoutApi = axios.create({
   baseUrl: import.meta.env.VITE_WORKOUT_URL,
 });
 
+workoutApi.interceptors.request.use(
+  (config) => {
+    // Get the access token stored in the browser
+    const token = localStorage.getItem(ACCESS_TOKEN);
+
+    // If a token exists, attach it to the Authorization header
+    if (token) {
+      console.log('token attached')
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    // Return the updated request config so the request can continue
+    return config;
+  },
+  (error) => {
+    // If something went wrong before sending the request, reject the promise
+    return Promise.reject(error);
+  }
+);
+
 export {workoutApi};
 
 /** ------------------------- */
