@@ -5,7 +5,7 @@ import CalorieCalculator from "./pages/CalorieCalculator"
 import Workout from "./pages/Workout"
 import NotFound from "./pages/NotFound"
 import ProtectedRoute from "./components/ProtectedRoute"
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom"
 
 function Logout() {
   localStorage.clear()
