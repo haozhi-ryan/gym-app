@@ -124,16 +124,9 @@ export default function CalorieForm() {
         </div>
 
         <button
+          className="submit-btn"
           type="submit"
-          style={{
-            padding: "10px 14px",
-            borderRadius: 10,
-            background: "#111827",
-            color: "white",
-            border: "none",
-            cursor: "pointer",
-            fontWeight: 600,
-          }}
+
         >
           Calculate
         </button>

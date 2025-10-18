@@ -6,6 +6,7 @@ class Workout(models.Model):
     name = models.CharField(max_length=100)
     weight = models.FloatField()
     sets = models.IntegerField()
+    day = models.CharField(max_length=12)
 
     def __str__(self):
         return f"{self.name} - {self.weight}kg x {self.sets} sets"

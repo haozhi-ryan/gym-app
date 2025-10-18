@@ -12,3 +12,31 @@
   justify-content: space-between;
   margin: 5px 0px;
 }
+
+/* Hide arrows in number input (for Chrome, Edge, Safari) */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.submit-btn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #111827;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.1s ease-in-out;
+}
+
+.submit-btn:hover {
+  background: #262d36;
+  transform: scale(1.02);
+}
+
+.submit-btn:active {
+  background: #0d1117;
+  transform: scale(0.98);
+}

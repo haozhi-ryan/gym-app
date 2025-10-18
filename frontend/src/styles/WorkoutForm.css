@@ -1,0 +1,130 @@
+.add-workout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.workout-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.workout-info label {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/* Hide arrows in number input (for Chrome, Edge, Safari) */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.add-btn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #111827;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.add-btn:hover {
+  background: #262d36;          /* lighter navy gray */
+  transform: scale(1.02);       /* subtle pop */
+  transition: all 0.1s ease-in-out;
+}
+
+.add-btn:active {
+  background: #0d1117;         /* slightly darker when clicked */
+  transform: scale(0.98);      /* subtle press effect */
+  transition: all 0.1s ease-in-out;
+}
+
+.workout-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.workout-list li {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 15px;
+  color: #111827;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+}
+
+.workout-list li:hover {
+  background: #f3f4f6;
+  transform: scale(1.01);
+  cursor: pointer;
+}
+
+.workout-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* 3 equal columns */
+  grid-template-rows: auto;           /* rows adjust to content */
+  gap: 10px;  
+  margin: 0px auto;
+  max-width: 1000px;
+}
+
+.workout-section h3 {
+  text-align: center;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  color: #111827;
+}
+
+.delete-btn {
+  background: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 4px 8px;
+  font-weight: bold;
+  transition: background 0.1s ease-in-out;
+}
+
+.delete-btn:hover {
+  background: #b91c1c;
+}
+
+.workout-info select,
+.workout-info input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.day-section {
+  margin-top: 20px;
+}
+
+.day-section h3 {
+  margin: 16px 0 8px;
+  color: #111827;
+}
+
+.workout-list .empty {
+  color: #6b7280;
+  background: #f9fafb;
+  border: 1px dashed #e5e7eb;
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+

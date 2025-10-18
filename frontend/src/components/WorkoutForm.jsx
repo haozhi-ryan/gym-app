@@ -6,9 +6,9 @@ export default function WorkoutForm() {
   const [weight, setWeight] = useState("")
   const [sets, setSets] = useState("")
   const [workouts, setWorkouts] = useState([])
-
+  const [day, setDay] = useState("monday")
   const token = localStorage.getItem("access")
-
+  const DAYS = ["monday","tuesday","wednesday","thursday","friday","saturday","sunday"]
 
   // Fetch workouts on load
   useEffect(() => {
@@ -27,25 +27,23 @@ export default function WorkoutForm() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    
-
     // For testing GET method
-    try {
-      const response = await fetch("http://127.0.0.1:8000/api/user/", {
-        method: "GET",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-        },
-      })
+    // try {
+    //   const response = await fetch("http://127.0.0.1:8000/api/user/", {
+    //     method: "GET",
+    //     headers: {
+    //       "Authorization": `Bearer ${token}`,
+    //     },
+    //   })
 
-      const data = await response.json();
-      console.log("User:", data.username);
-      console.log("User ID:", data.id);
-      console.log("User email:", data.email);
-      // setUsername(data.username)
-    } catch (error) {
-      console.error("Error fetching username:", error);
-    }
+    //   const data = await response.json();
+    //   console.log("User:", data.username);
+    //   console.log("User ID:", data.id);
+    //   console.log("User email:", data.email);
+    //   // setUsername(data.username)
+    // } catch (error) {
+    //   console.error("Error fetching username:", error);
+    // }
 
     if (!name.trim()) return
 
@@ -56,39 +54,94 @@ export default function WorkoutForm() {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`,
       },
-      body: JSON.stringify({ name, weight, sets }),
+      body: JSON.stringify({ name, weight, sets, day }),
     })
 
-    setName("") // clear input after adding
+    // Fetch updated workouts
+    const res = await fetch("http://127.0.0.1:8002/workouts/", {
+      headers: { "Authorization": `Bearer ${token}` },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setWorkouts(data);
+    }
+
+    // Clear inputs after adding
+    setName("") 
     setWeight("")
     setSets("")
+    setDay("monday")
   }
+
+  const handleDelete = async (id) => {
+    const token = localStorage.getItem("access");
+    await fetch(`http://127.0.0.1:8002/workouts/${id}/delete/`, {
+      method: "DELETE",
+      headers: { "Authorization": `Bearer ${token}` },
+    });
+    // remove from state without refetching
+    setWorkouts(workouts.filter((w) => w.id !== id));
+  };
+
+  const grouped = workouts.reduce((acc, w) => {
+    const key = (w.day || "").toLowerCase()
+    const valid = DAYS.includes(key) ? key : "unscheduled"
+    acc[valid] = acc[valid] || []
+    acc[valid].push(w)
+    return acc
+  }, {})
 
   return  (
     <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Workout name:
-          <input value={name} onChange={(e) => setName(e.target.value)} />
-        </label>
-        <label>
-          Weight (kg):
-          <input type="number" value={weight} onChange={(e) => setWeight(e.target.value)} />
-        </label>
-        <label>
-          Sets:
-          <input type="number" value={sets} onChange={(e) => setSets(e.target.value)} />
-        </label>
-        <button type="submit">Add</button>
+      <form className="add-workout-form" onSubmit={handleSubmit}>
+        <div className="workout-info">
+          <label>
+            Exercise name:
+            <input value={name} onChange={(e) => setName(e.target.value)} />
+          </label>
+          <label>
+            Weight (kg):
+            <input type="number" value={weight} onChange={(e) => setWeight(e.target.value)} />
+          </label>
+          <label>
+            Sets:
+            <input type="number" value={sets} onChange={(e) => setSets(e.target.value)} />
+          </label>
+          <label>
+            Day of the week:
+            <select value={day} onChange={(e) => setDay(e.target.value)}>
+              {DAYS.map(d => (
+                <option key={d} value={d}>{d.charAt(0).toUpperCase()+d.slice(1)}</option>
+              ))}
+            </select>
+          </label>
+        </div>
+        <button 
+          type="submit"
+          className="add-btn"
+        >
+          Add</button>
       </form>
-      <h3>Your Workouts</h3>
-        <ul>
-          {workouts.map((w) => (
-            <li key={w.id}>
-              {w.name} – {w.weight} kg × {w.sets} sets
-            </li>
-          ))}
-      </ul>
+
+      <div className="workout-section">
+          {DAYS.map(d => (
+          <section key={d} className="day-section">
+            <h3>{d.charAt(0).toUpperCase()+d.slice(1)}</h3>
+            <ul className="workout-list">
+              {(grouped[d] || []).map(w => (
+                <li key={w.id}>
+                  <div>
+                    <span>{w.name}</span>
+                    <span> {w.weight}kg × {w.sets} sets</span>
+                  </div>
+                  <button className="delete-btn" onClick={() => handleDelete(w.id)}>✕</button>
+                </li>
+              ))}
+              {!(grouped[d] || []).length && <li className="empty">No workouts</li>}
+            </ul>
+          </section>
+        ))}
+      </div>
     </div>
   )
 }

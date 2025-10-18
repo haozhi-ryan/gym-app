@@ -52,3 +52,25 @@ def get_workouts(request):
     serializer = WorkoutSerializer(workouts, many=True);
 
     return Response(serializer.data);
+
+@api_view(['DELETE'])
+def delete_workout(request, pk):
+    token = request.headers.get("Authorization")
+    if not token:
+        return Response({'error': 'Missing token'}, status=401)
+
+    auth_response = requests.get(
+        "http://127.0.0.1:8000/api/user/",
+        headers={"Authorization": token}
+    )
+    if auth_response.status_code != 200:
+        return Response({'error': 'Invalid token'}, status=401)
+
+    user_data = auth_response.json()
+    try:
+        workout = Workout.objects.get(id=pk, user_id=user_data["id"])
+    except Workout.DoesNotExist:
+        return Response({'error': 'Workout not found'}, status=404)
+
+    workout.delete()
+    return Response(status=204)
