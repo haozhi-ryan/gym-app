@@ -3,7 +3,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Workout
 from .serializers import WorkoutSerializer
-import requests
+import os, requests
+
+AUTH_BASE_URL = os.getenv("AUTH_BASE_URL", "http://127.0.0.1:8000")
 
 # Create your views here.
 @api_view(['POST'])
@@ -14,7 +16,7 @@ def create_workout(request):
 
     # Forward the SAME header you received (it already has "Bearer ")
     auth_response = requests.get(
-        "http://127.0.0.1:8000/api/user/",
+        f"{AUTH_BASE_URL}/api/user/",
         headers={"Authorization": token}
     )
     if auth_response.status_code != 200:
@@ -40,7 +42,7 @@ def get_workouts(request):
 
     # Ask the Auth service who the user is
     auth_response = requests.get(
-        "http://127.0.0.1:8000/api/user/",
+        f"{AUTH_BASE_URL}/api/user/",
         headers={"Authorization": token}
     )
 
@@ -60,7 +62,7 @@ def delete_workout(request, pk):
         return Response({'error': 'Missing token'}, status=401)
 
     auth_response = requests.get(
-        "http://127.0.0.1:8000/api/user/",
+        f"{AUTH_BASE_URL}/api/user/",
         headers={"Authorization": token}
     )
     if auth_response.status_code != 200:

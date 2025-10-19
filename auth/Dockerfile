@@ -1,8 +1,8 @@
 FROM python:3.12-slim
 
-LABEL name="Workout Service"
+LABEL name="Authentication Service"
 
-WORKDIR /workout-app
+WORKDIR /auth-app
 
 COPY requirements.txt .
 
@@ -12,6 +12,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy app
 COPY . .
 
-EXPOSE 8002
+EXPOSE 8000
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8002"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
