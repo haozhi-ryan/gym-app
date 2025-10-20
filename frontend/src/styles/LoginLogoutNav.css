@@ -1,0 +1,17 @@
+.register-nav-btn,
+.login-nav-btn {
+  background: none;
+  border: none;
+  color: #6b7280; /* light gray text */
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.register-nav-btn:hover,
+.login-nav-btn:hover {
+  text-decoration: underline;
+  color: #111827; /* darken slightly on hover */
+}
+
+

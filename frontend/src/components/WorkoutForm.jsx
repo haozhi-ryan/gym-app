@@ -9,11 +9,12 @@ export default function WorkoutForm() {
   const [day, setDay] = useState("monday")
   const token = localStorage.getItem("access")
   const DAYS = ["monday","tuesday","wednesday","thursday","friday","saturday","sunday"]
+  const BASE = import.meta.env.VITE_WORKOUT_URL;
 
   // Fetch workouts on load
   useEffect(() => {
     const fetchWorkouts = async () => {
-      const res = await fetch("http://127.0.0.1:8002/workouts/", {
+      const res = await fetch(`${BASE}/workouts/`, {
         headers: { "Authorization": `Bearer ${token}` },
       })
       if (res.ok) {
@@ -30,7 +31,7 @@ export default function WorkoutForm() {
     if (!name.trim()) return
 
     // For adding workouts
-    await fetch("http://127.0.0.1:8002/workouts-create/", {
+    await fetch(`${BASE}/workouts-create/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -40,7 +41,7 @@ export default function WorkoutForm() {
     })
 
     // Fetch updated workouts
-    const res = await fetch("http://127.0.0.1:8002/workouts/", {
+    const res = await fetch(`${BASE}/workouts/`, {
       headers: { "Authorization": `Bearer ${token}` },
     });
     if (res.ok) {
@@ -57,7 +58,7 @@ export default function WorkoutForm() {
 
   const handleDelete = async (id) => {
     const token = localStorage.getItem("access");
-    await fetch(`http://127.0.0.1:8002/workouts/${id}/delete/`, {
+    await fetch(`${BASE}/workouts/${id}/delete/`, {
       method: "DELETE",
       headers: { "Authorization": `Bearer ${token}` },
     });

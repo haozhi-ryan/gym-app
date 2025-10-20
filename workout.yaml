@@ -1,0 +1,38 @@
+# ---------------------------- WORKOUT SERVICE --------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: workout
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: workout
+  template:
+    metadata:
+      labels:
+        app: workout
+    spec:
+      containers:
+        - name: workout
+          image: workout-service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8002
+          env:
+            - name: AUTH_BASE_URL
+              value: http://auth:8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: workout
+spec:
+  type: NodePort
+  selector:
+    app: workout
+  ports:
+    - name: http
+      port: 8002
+      targetPort: 8002
+      nodePort: 30082

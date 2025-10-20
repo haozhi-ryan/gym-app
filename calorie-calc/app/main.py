@@ -6,7 +6,7 @@ app = FastAPI(title="Calorie Calculator API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173","http://127.0.0.1:5173"],
+    allow_origins=["http://localhost:5173","http://127.0.0.1:5173", "*"],
     allow_credentials=False,  # set True only if you use cookies
     allow_methods=["*"],      # or ["POST", "OPTIONS"]
     allow_headers=["*"],      # or ["Authorization", "Content-Type"]
