@@ -1,15 +1,69 @@
-.logout-btn {
-  padding: 10px 14px;
-  border-radius: 8px;
-  background-color: #111827;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  margin-top: 16px;
-  transition: background 0.2s ease-in-out;
+/* Page layout */
+.home-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: radial-gradient(1200px 600px at 20% 10%, #eef2ff 0%, transparent 60%),
+              radial-gradient(1000px 500px at 90% 80%, #f5f7ff 0%, transparent 60%),
+              #f8fafc;
 }
 
+/* Card */
+.home-card {
+  width: 100%;
+  max-width: 560px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow:
+    0 1px 2px rgba(16, 24, 40, 0.04),
+    0 8px 24px rgba(16, 24, 40, 0.06);
+}
+
+/* Typography */
+.home-title {
+  margin: 0 0 6px;
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #0f172a; /* slate-900 */
+}
+
+.home-subtitle {
+  margin: 0 0 20px;
+  color: #475569; /* slate-600 */
+  font-size: 14px;
+}
+
+/* Buttons layout */
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Reuse your dark button style (imported from LogoutButton.css)
+   but add minor layout tweaks here if needed */
+.logout-btn {
+  padding: 12px 16px;      /* a touch taller for better tap targets */
+  border-radius: 10px;
+  font-weight: 600;
+  width: 100%;
+}
+
+/* Hover already handled in LogoutButton.css; optional subtle lift */
 .logout-btn:hover {
-  background-color: #262d36;
+  transform: translateY(-1px);
+}
+
+/* Responsive: on larger screens, line buttons up */
+@media (min-width: 520px) {
+  .button-group {
+    flex-direction: row;
+  }
+  .logout-btn {
+    width: auto;
+  }
 }

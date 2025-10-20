@@ -26,25 +26,7 @@ export default function WorkoutForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
-    // For testing GET method
-    // try {
-    //   const response = await fetch("http://127.0.0.1:8000/api/user/", {
-    //     method: "GET",
-    //     headers: {
-    //       "Authorization": `Bearer ${token}`,
-    //     },
-    //   })
-
-    //   const data = await response.json();
-    //   console.log("User:", data.username);
-    //   console.log("User ID:", data.id);
-    //   console.log("User email:", data.email);
-    //   // setUsername(data.username)
-    // } catch (error) {
-    //   console.error("Error fetching username:", error);
-    // }
-
+    
     if (!name.trim()) return
 
     // For adding workouts
